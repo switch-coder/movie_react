@@ -2,34 +2,34 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const Conatiner = styled.div`
-  height: 100vh;
-  width: 100vw;
+  display: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: center;
   color: white;
-  position: relative;
 `;
 
-const roading = keyframes`
+const LoadingText = keyframes`
   0% {
     color: white;
   }
   50% {
-    color: black;
+    color: #E6E6E6;
   }
 `;
 
-const rotateLoading = keyframes`
-  0% {
+const Loading = keyframes`
+  from {
     transform: rotate(0deg);
   }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 `;
 
-const loaderRotate = styled.div`
+const Rotate = styled.span`
   position: relative;
   width: 110px;
   height: 110px;
@@ -37,24 +37,21 @@ const loaderRotate = styled.div`
   border: 1px solid transparent;
   border-color: transparent white transparent white;
   border-radius: 100%;
-  animation: ${rotateLoading} 1.5s linear 0s infinite normal;
+  animation: ${Loading} 1.5s linear 0s infinite normal;
 `;
 
-const loaderText = styled.div`
+const Text = styled.span`
   position: relative;
   text-align: center;
   left: -60px;
   width: 110px;
   color: black;
-  animation-name: ${roading};
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+  animation-name: ${LoadingText} 2s infinite;
 `;
 
 export default () => (
   <Conatiner>
-    <span>Loading</span>
-    <loaderRotate />
-    <loaderText>Loading...</loaderText>
+    <Rotate />
+    <Text>Loading...</Text>
   </Conatiner>
 );
