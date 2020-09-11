@@ -38,6 +38,7 @@ export default class extends React.Component {
         ({ data: result } = await tvApi.showDetail(parsedId));
       }
       this.setState({ result });
+      // console.log(result);
     } catch {
       this.setState({ error: "결과를 찾을 수 없습니다." });
     } finally {

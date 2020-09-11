@@ -43,3 +43,5 @@ export const movieApi = {
       },
     }),
 };
+
+export const videoApi = {};
