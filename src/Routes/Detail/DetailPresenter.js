@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Loader from "Components/Loader";
 import YT from "Components/YT";
 import Message from "Components/Message";
+import Slider from "Components/Slider";
+
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -15,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Backdrop = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
@@ -89,11 +91,12 @@ const Slide = styled.div`
   margin-top: 0px;
   background-color: #596275;
   opacity: 0.8;
-  width: 70%;
-  height: 350px;
+  width: 60vw;
+  /* height: 350px; */
   display: flex;
   align-items: center;
   padding: 20px;
+  margin-bottom:50px;
 `;
 
 const Tab = styled.div`
@@ -106,6 +109,7 @@ const Tab = styled.div`
 const TabContent = styled.p`
   color: #f5c518;
   padding: 10px;
+  width:100px;
   text-align: center;
   background-color: #596275;
   font-size: 1.2em;
@@ -116,18 +120,19 @@ const TabContent = styled.p`
   opacity: 0.8;
 `;
 
-const VideoContainer = styled.iframe`
-  height: 300px;
-  width: 400px;
-`;
 
 const Companies = styled.div`
   width: 100px;
   height: 100px;
+  display:flex;
+  align-items:center;
   background-image: url(${(props) => props.bgImage});
   background-position: center center;
   background-size: cover;
   border-radius: 20px;
+  &:not(:last-child){
+    margin-right:20px;
+  }
 `;
 
 const DetailPresenter = ({ result, error, loading }) =>
@@ -203,35 +208,27 @@ const DetailPresenter = ({ result, error, loading }) =>
           <Overview>{result.overview}</Overview>
           <Tab>
             <TabContent>trailer</TabContent>
-            <TabContent>companies</TabContent>
           </Tab>
           <Slide>
             {result.videos.results &&
               result.videos.results.length > 0 &&
-              result.videos.results.map((video) => (
-                <VideoContainer
-                  id={video.id}
-                  key={video.id}
-                  title={video.id}
-                  src={`https://www.youtube.com/embed/${video.key}`}
-                  allowFullScreen="allowFullScreen"
-                  frameBorder="0"
-                />
-              ))}
+           ( <Slider videos={result.videos.results} count={3}  length={result.videos.results.length}> </Slider>)}
           </Slide>
 
           <Tab>
-            <TabContent>trailer</TabContent>
             <TabContent>companies</TabContent>
           </Tab>
           <Slide>
+
             {result.production_companies &&
               result.production_companies.length > 0 &&
-              result.production_companies.map((companies) => (
-                <Companies
-                  bgImage={`https://image.tmdb.org/t/p/w300${companies.logo_path}`}
-                ></Companies>
-              ))}
+              result.production_companies.map((companies) => companies.logo_path ?              
+                  (
+                  <Companies
+                    bgImage={`https://image.tmdb.org/t/p/w300${companies.logo_path}`}
+                  ></Companies>
+                  ): <Companies>{companies.name}</Companies>)
+                  }
           </Slide>
         </Data>
       </Content>
